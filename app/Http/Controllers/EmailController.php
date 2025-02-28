@@ -16,12 +16,9 @@ class EmailController extends Controller
             'message' => 'required|string'
         ]);
 
-        $data = [
-            'subject' => $request->subject,
-            'message' => $request->message
-        ];
-
-        Mail::to($request->email)->send(new NotificationEmail($data));
+        $data = $request->all();
+  
+        Mail::to('dilson.contato316@gmail.com')->send(new NotificationEmail($data));
 
         return response()->json(['message' => 'E-mail enviado com sucesso!']);
     }

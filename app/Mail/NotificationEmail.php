@@ -16,11 +16,9 @@ class NotificationEmail extends Mailable
     /**
      * Create a new message instance.
      */
-    public $data;
 
-    public function __construct($data)
+    public function __construct(protected array $data)
     {
-        $this->data = $data;
     }
 
     /**
@@ -29,7 +27,8 @@ class NotificationEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Notification Email',
+            from: config('mail.from.address'),
+            subject: $this->data['subject'] ?? 'Notification Email',
         );
     }
 
@@ -39,16 +38,9 @@ class NotificationEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.notification',
+            with: ['data' => $this->data],
         );
-    }
-
-    public function build()
-    {
-        return $this->from(config('mail.from.address'))
-            ->subject($this->data['subject'])
-            ->view('emails.notification')
-            ->with('data', $this->data);
     }
 
     /**
