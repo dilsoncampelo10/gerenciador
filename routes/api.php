@@ -7,4 +7,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-Route::post('/api/enviar-email', [EmailController::class, 'send']);
+Route::post('/enviar-email', [EmailController::class, 'send']);
